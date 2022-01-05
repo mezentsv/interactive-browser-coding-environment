@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { unpkgPathPlugin, fetchPlugin } from './plugins';
 
+import CodeEditor from './components/code-editor';
+
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
+
 const App = () => {
   const [input, setInput] = useState('');
   const ref = useRef<any>();
@@ -61,6 +65,7 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor onChange={(value) => setInput(value)} value={input} />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

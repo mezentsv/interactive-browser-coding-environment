@@ -1,0 +1,11 @@
+.editor-wrapper .JSXBracket {
+  color: #4a7da7;
+}
+
+.editor-wrapper .JSXIdentifier {
+  color: #1482db;
+}
+
+.editor-wrapper .JSXAttribute {
+  color: #c8ba3d;
+}
