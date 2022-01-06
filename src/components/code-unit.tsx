@@ -7,12 +7,14 @@ import bundle from '../bundler';
 
 const CodeUnit = () => {
   const [input, setInput] = useState('const a = 1;');
+  const [err, setErr] = useState('');
   const [code, setCode] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundle(input);
-      setCode(output);
+      const { code, error } = await bundle(input);
+      setCode(code);
+      setErr(error);
     }, 1000);
     return () => {
       clearTimeout(timer);
@@ -25,7 +27,7 @@ const CodeUnit = () => {
         <Resizable direction="horizontal">
           <CodeEditor onChange={(value) => setInput(value)} value={input} />
         </Resizable>
-        <Preview code={code} />
+        <Preview code={code} error={err} />
       </div>
     </Resizable>
   );
