@@ -20,7 +20,9 @@ const initialState: CellsState = {
   data: {},
 };
 
-const reducer = produce((state: CellsState = initialState, action: Action) => {
+const reducer = produce<
+  (state: CellsState | undefined, action: Action) => CellsState
+>((state = initialState, action) => {
   switch (action.type) {
     case ActionType.MOVE_CELL: {
       const { id, direction } = action.payload;
