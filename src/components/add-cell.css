@@ -1,10 +1,11 @@
 .add-cell {
   position: relative;
+  margin: 8px 0;
 }
 
 .add-cell:not(.force-visible) {
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease-in 0.1s;
 }
 
 .add-cell:hover {
