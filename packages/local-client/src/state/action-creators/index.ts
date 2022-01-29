@@ -9,8 +9,10 @@ import {
   MoveCellAction,
   InsertCellAfterAction,
 } from '../actions';
-import { CellType } from '../cell';
+import { Cell, CellType } from '../cell';
 import bundleCode from '../../bundler';
+import axios from 'axios';
+import { RootState } from '../reducers';
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -72,5 +74,38 @@ export const createBundle = (cellId: string, input: string) => {
         bundle,
       },
     });
+  };
+};
+
+export const fetchCells = () => {
+  return async (dispath: Dispatch<Action>) => {
+    dispath({ type: ActionType.FETCH_CELLS });
+
+    try {
+      const { data }: { data: Cell[] } = await axios.get('/cells');
+
+      dispath({ type: ActionType.FETCH_CELLS_COMPLETE, payload: data });
+    } catch (error: any) {
+      dispath({ type: ActionType.FETCH_CELLS_ERROR, payload: error.message });
+    }
+  };
+};
+
+export const saveCells = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const {
+      cells: { data, order },
+    } = getState();
+
+    const cells = order.map((id) => data[id]);
+
+    try {
+      await axios.post('/cells', { cells });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.SAVE_CELLS_ERROR,
+        payload: error.message,
+      });
+    }
   };
 };
